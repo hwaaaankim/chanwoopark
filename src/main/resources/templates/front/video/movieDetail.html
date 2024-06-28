@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/front/common :: head('영화감상')">
+</head>
+
+<body>
+	<th:block th:replace="fragments/front/common :: navigation"></th:block>
+   <div class="video-container iq-main-slider" style="text-align:center;">
+      <iframe width="80%" height="700"	th:src="${src}" frameborder="1"
+										allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+   </div>
+   
+   <div class="main-content movi">
+      <section class="movie-detail container-fluid">
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="trending-info g-border">
+                  <h1 class="trending-text big-title text-uppercase mt-0" th:text="${video.name}">영상 제목</h1>
+                  <ul class="p-0 list-inline d-flex align-items-center movie-content">
+                     <li class="text-white" th:text="${video.hashtag}">#해시태그</li>
+                  </ul>
+                  <div class="d-flex align-items-center text-white text-detail">
+                     <span class="badge badge-secondary p-3">18+</span>
+                     <span class="ml-3"><span th:text="${video.clicks}"></span>회 재생</span>
+                     <span class="trending-year" th:text="${video.indate}">2020-02-02</span>
+                  </div>
+                  <p class="trending-dec w-100 mb-0" th:text="${video.comment}">영상에 대한 설명 영역</p>
+                  <ul class="list-inline p-0 mt-4 share-icons music-play-lists">
+                     <li><span><i class="ri-heart-fill"></i></span></li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </section>
+      <section id="iq-upcoming-movie">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-12 overflow-hidden">
+                  <div class="iq-main-header d-flex align-items-center justify-content-between">                     
+                     <h4 class="main-title"><a href="javascript:void(0)">최신 업로드 영상</a></h4>
+                  </div>
+                  <div class="upcoming-contens">
+                     <ul class="favorites-slider list-inline  row p-0 mb-0">
+                        <li class="slide-item" th:each="recent:${recent}">
+                           <a href="#">
+                              <div class="block-images position-relative">
+                                 <div class="img-box">
+                                    <img th:src="${recent.image02}" class="img-fluid" alt="">
+                                 </div>
+                                 <div class="block-description">
+                                    <h6 th:text="${recent.name}">영상 제목</h6>
+                                    <div class="movie-time d-flex align-items-center my-2">
+                                       <div class="badge badge-secondary p-1 mr-2">18+</div>
+                                       <span class="text-white"><span th:text="${recent.clicks}"></span>회</span>
+                                    </div>
+                                    <div class="hover-buttons" th:onclick="|buyVideo('${recent.id}')|">
+                                       <span class="btn btn-hover">
+                                          <i class="fa fa-play mr-1" aria-hidden="true"></i>
+                                          Play Now
+                                       </span>
+                                    </div>
+                                 </div>
+                                 <div class="block-social-info">
+                                    <ul class="list-inline p-0 m-0 music-play-lists">
+                                       <li><span><i class="ri-file-list-2-fill"></i></span></li>
+                                          <li><span><i class="ri-heart-fill"></i></span></li>
+                                          <li><span><i class="ri-play-circle-fill"></i></span></li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </div>
+   <footer class="mb-0" th:replace="fragments/front/common :: footer">
+   
+   </footer>
+   <div id="back-to-top">
+      <a class="top" href="#top" id="top"> <i class="fa fa-angle-up"></i> </a>
+   </div>
+	<th:block th:replace="fragments/front/script"></th:block>
+</body>
+
+</html>

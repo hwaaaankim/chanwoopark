@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/front/common :: head('공지사항')">
+</head>
+
+<body>
+    <th:block th:replace="fragments/front/common :: navigation"></th:block>
+    <section class="m-profile setting-wrapper">        
+        <div class="container">
+            <h4 class="main-title mb-4">공지사항</h4>
+            <div class="row">
+                <div class="col-lg-10" style="margin:auto;">
+                    <div class="sign-user_card">
+                        <h5 class="mb-3 pb-3 mt-4 a-border">공지사항</h5>
+                        <div class="table-responsive pricing pt-2">
+                            <div class="faq-wrap mb-3" th:each="notice:${notice}">
+								<div class="faq-subject" th:onclick="|contentOpen('${notice.id}')|" th:id="'faqc'+${notice.id}">
+									<p>
+									<th:block th:if="${notice.sign == true}">
+									<span class="important-faq"><sup><i class="fas fa-exclamation-circle"></i>중요공지</sup></span>
+									</th:block>	
+									<span th:text="${notice.subject}"></span></p>
+									<p class="faq-incontent" th:text="${notice.content}"></p>
+									<span><i class="fas fa-eye"></i><span class="clicks" th:text="${notice.clicks}"></span>회</span>
+									<span><i class="far fa-calendar-alt"></i><span th:text="${notice.indate}"></span></span> 
+								</div>
+								<div class="faq-content" th:id="'faq-content'+${notice.id}">
+									<p th:text="${notice.content}"></p>
+								</div>
+							</div>
+                            <div class="table-nav">
+								<nav aria-label="navigation" style="text-align: center;">
+							<ul class="pagination justify-content-center">
+								<li class="page-item"
+									th:classappend="${1 == notice.pageable.pageNumber+1} ? 'disabled'">
+									<a class="page-link" href="#"
+									th:href="@{/notice(page=0)}"
+									tabindex="-1" aria-disabled="true">First</a>
+								</li>
+								<li class="page-item"
+									th:classappend="${1 == notice.pageable.pageNumber+1} ? 'disabled'">
+									<a class="page-link" href="#"
+									th:href="@{/notice(page=${notice.pageable.pageNumber - 1})}"
+									tabindex="-1" aria-disabled="true">Previous</a>
+								</li>
+								<li class="page-item"
+									th:classappend="${i == notice.pageable.pageNumber+1} ? 'disabled'"
+									th:each="i : ${#numbers.sequence(startPage, endPage)}">
+									<a class="page-link" href="#" th:text=${i} th:href="@{/notice(page=${i-1})}"></a>
+								</li>
+								<li class="page-item"
+									th:classappend="${notice.totalPages == notice.pageable.pageNumber + 1} ? 'disabled'">
+									<a class="page-link" href="#"
+									th:href="@{/notice(page=${notice.pageable.pageNumber + 1})}">Next</a>
+								</li>
+								<li class="page-item"
+									th:classappend="${notice.totalPages == notice.pageable.pageNumber + 1} ? 'disabled'">
+									<a class="page-link" href="#"
+									th:href="@{/notice(page=${notice.totalPages-1})}">Last</a>
+								</li>
+							</ul>
+						</nav>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="mb-0" th:replace="fragments/front/common :: footer">
+    </footer>
+    <div id="back-to-top">
+        <a class="top" href="#top" id="top"> <i class="fa fa-angle-up"></i> </a>
+    </div>
+    <th:block th:replace="fragments/front/script"></th:block>
+</body>
+
+</html>

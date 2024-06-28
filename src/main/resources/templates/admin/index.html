@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin/common :: head('노딱넷 관리자페이지')">
+
+</head>
+
+<body>
+	<section id="container">
+		<header class="header black-bg" th:replace="fragments/admin/common :: header">
+			
+		</header>
+		
+		<aside th:replace="fragments/admin/common :: sidebar">
+			
+		</aside>
+		
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row">
+					<div class="col-lg-9 main-chart">
+					</div>
+					<div class="col-lg-3 ds">
+					</div>
+				</div>
+			</section>
+		</section>
+		
+		<footer th:replace="fragments/admin/common :: footer">
+		</footer>
+	</section>
+	<th:block th:replace="fragments/admin/script"></th:block>
+</body>
+</html>

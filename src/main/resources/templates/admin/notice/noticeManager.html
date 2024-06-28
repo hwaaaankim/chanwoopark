@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin/common :: head('노딱넷 비디오관리')">
+
+</head>
+
+<body>
+	<section id="container">
+		<header class="header black-bg" th:replace="fragments/admin/common :: header">
+			
+		</header>
+		
+		<aside th:replace="fragments/admin/common :: sidebar">
+			
+		</aside>
+		
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row mt">
+					<div class="col-md-12">
+						<div class="content-panel">
+							<button class="video-registerBtn" th:onclick="noticeRegisterF()">공지사항 등록</button>
+                			<hr>
+							<table class="table table-striped table-advance table-hover">
+								<thead>
+									<tr>
+										<th class="hidden-phone"><i class="fa fa-bullhorn"></i> 번호</th>
+										<th class="hidden-phone"><i class="fa fa-bookmark"></i> 작성 시간</th>
+										<th><i class="fa fa-question-circle"></i>제목</th>
+										<th><i class="fa fa-user"></i> 조회수</th>
+										<th><i class="fas fa-cogs"></i> 비고</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="notice : ${notice}">
+										<td class="hidden-phone" th:text=${notice.id}>번호</td>
+										<td class="hidden-phone" th:text="${notice.indate}">날짜</td>
+										<td>
+											<th:block th:if="${notice.sign==true}">
+												<sup class="suptext">중요!!</sup>
+											</th:block>
+										<a href="javascript:void(0)" th:onclick="|noticeDetail('${notice.id}')|" th:text="${notice.subject}">공지사항 제목</a></td>
+										<td th:text="${notice.clicks}">조회수</td>
+										<td>
+											<button class="btn btn-primary btn-xs" th:onclick="|noticeDetail('${notice.id}')|">
+												<i class="fa fa-pencil"></i>
+											</button>
+											<button class="btn btn-danger btn-xs" th:onclick="|noticeDelete('${notice.id}')|">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
+									</tr> 
+								</tbody>
+							</table>
+							<nav aria-label="navigation" style="text-align: center;">
+								<ul class="pagination justify-content-center">
+									<li class="page-item"
+										th:classappend="${1 == notice.pageable.pageNumber+1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/noticeManager(page=0)}"
+										tabindex="-1" aria-disabled="true">First</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${1 == notice.pageable.pageNumber+1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/noticeManager(page=${notice.pageable.pageNumber - 1})}"
+										tabindex="-1" aria-disabled="true">Previous</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${i == notice.pageable.pageNumber+1} ? 'disabled'"
+										th:each="i : ${#numbers.sequence(startPage, endPage)}">
+										<a	class="page-link" href="#" th:text=${i}
+										th:href="@{/noticeManager(page=${i-1})}">1</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${notice.totalPages == notice.pageable.pageNumber + 1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/noticeManager(page=${notice.pageable.pageNumber + 1})}">Next</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${notice.totalPages == notice.pageable.pageNumber + 1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/noticeManager(page=${notice.totalPages-1})}">Last</a>
+									</li>
+								</ul>
+							</nav> 
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		
+		<footer th:replace="fragments/admin/common :: footer">
+		</footer>
+	</section>
+	<th:block th:replace="fragments/admin/script"></th:block>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>노딱넷 성인인증</title>
+        <script th:inline="javascript">
+        	var findPwCode = /*[[${FindPwCode}]]*/ 'default';
+        	console.log(findPwCode);
+        </script>
+        <script type="text/javascript">
+            window.onload=function(){
+            	if(findPwCode=='S'){
+            		self.close();
+                	alert('등록하신 연락처로 비밀번호가 발송 되었습니다');	
+            	}else if(findCode=='Null'){
+            		self.close();
+            		alert('일치하는 계정이 없습니다. 다시 확인 해 주세요');
+            	}
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

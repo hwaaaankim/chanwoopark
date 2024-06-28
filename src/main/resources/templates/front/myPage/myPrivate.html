@@ -1,0 +1,158 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/front/common :: head('내정보')">
+</head>
+
+<body>
+    <th:block th:replace="fragments/front/common :: navigation"></th:block>
+
+    <section class="m-profile setting-wrapper">        
+        <div class="container">
+            <h4 class="main-title mb-4">My Information</h4>
+            <div class="row">
+                <div class="col-lg-10" style="margin:auto;">
+                    <div class="sign-user_card"style="margin-bottom:20px;">
+                        <h5 class="mb-3 pb-3 a-border">MyInfo</h5>
+                        <div class="row align-items-center justify-content-between mb-3">
+                            <form action="#" method="POST" class="row align-items-center justify-content-between ml-1"
+                            style="width:100%;">
+	                            <div class="col-md-8">
+	                                <span class="text-light font-size-13">ID</span>
+	                                <p class="mb-0" th:text="${member.username}">ID</p>
+	                            </div>
+	                            <div class="col-md-4 text-md-right text-left">
+	                                <a href="javascript:void(0)" th:onclick="withdraw();" class="text-primary">회원탈퇴</a>
+	                            </div>   
+                            </form>
+                        </div>
+                        <div class="row align-items-center justify-content-between mb-3">
+                           <form th:action="@{/member/infoUpdate}" method="POST" class="row align-items-center justify-content-between ml-1"
+                            style="width:100%;">
+	                            <div class="col-md-8">
+	                                <span class="text-light font-size-13">Email</span>
+	                                <input type="text" class="form-control myinfoInput" name="email" disabled="disabled"
+								id="email" th:value="${member.email}" required="required">
+	                            </div>   
+	                            <div class="col-md-4 text-md-right text-left">                      
+	                                <input type="submit" class="myinfoBtn" value="수정하기" th:onclick="return emailInCheck()" id="emailCBtn">
+									<div id="emailHelp" class="form-text help-message"></div>
+									<input type="hidden" th:value="${member.id}" name="id">
+	                            </div>
+                            </form>
+                        </div>
+                        <div class="row align-items-center justify-content-between mb-3">
+	                        <form th:action="@{/member/infoUpdate}" method="POST" class="row align-items-center justify-content-between ml-1"
+	                            style="width:100%;">
+	                            <div class="col-md-8">
+	                                <span class="text-light font-size-13">Password</span>
+	                                <input type="password" class="form-control myinfoInput" name="password" disabled="disabled"
+									id="password" th:value="${member.password}" required="required">
+	                            </div>
+	                            <div class="col-md-4 text-md-right text-left">
+	                                <input type="submit" class="myinfoBtn" value="수정하기" th:onclick="return passwordInCheck()" id="passwordCBtn">
+	                                <div id="passwordHelp" class="form-text help-message"></div>
+									<input type="hidden" th:value="${member.id}" name="id">
+	                            </div>
+                            </form>
+                        </div>
+                        <div class="row align-items-center justify-content-between mb-3">
+	                        <form th:action="@{/member/infoUpdate}" method="POST" class="row align-items-center justify-content-between ml-1"
+	                            style="width:100%;">
+	                            <div class="col-md-8">
+	                                <span class="text-light font-size-13">NickName</span>
+	                                <input type="text" class="form-control myinfoInput" name="nickname"
+									disabled="disabled" id="nickname" th:value="${member.nickname}" required="required">
+	                            </div>
+	                            <div class="col-md-4 text-md-right text-left">
+	                                <input type="submit" class="myinfoBtn" value="수정하기" th:onclick="return nickInCheck()" id="nickCBtn">
+									<div id="nicknameHelp" class="form-text help-message"></div>
+									<input type="hidden" th:value="${member.id}" name="id">
+	                            </div>
+                            </form>
+                        </div>
+                        <div class="row align-items-center justify-content-between">
+                            <form action="#" method="POST" class="row align-items-center justify-content-between ml-1"
+                            style="width:100%;">
+	                            <div class="col-md-8">
+	                                <span class="text-light font-size-13">Point</span>
+	                                <p class="mb-0"><span th:text="${member.point}"></span>원</p>
+	                            </div>
+	                            <div class="col-md-4 text-md-right text-left">
+	                                <a th:href="@{/pointCharge}" class="text-primary">충전하기</a>
+	                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="sign-user_card">
+                        <h5 class="mb-3 pb-3 mt-4 a-border">Point사용내역</h5>
+                        <div class="table-responsive pricing pt-2">
+                            <table id="my-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center prc-wrap">번호</th>
+                                        <th class="text-center prc-wrap">날짜</th>
+                                        <th class="text-center prc-wrap">금액</th>
+                                        <th class="text-center prc-wrap">내용</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="page : ${page}">
+                                        <th class="text-center" scope="row" th:text="${page.id}">1</th>
+                                        <td class="text-center child-cell" th:text="${page.pointdate}">2020-02-02</td>
+                                        <td class="text-center child-cell plus" th:if="${page.sign == true}"> +<span th:text="${page.pointC}"></span>원</td>
+										<td class="text-center child-cell minus" th:if="${page.sign == false}"> -<span th:text="${page.pointC}"></span>원</td>
+                                        <td class="text-center child-cell" th:text="${page.pointcontent}">--- 감상 </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table-nav">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination justify-content-center">
+										<li class="page-item"
+											th:classappend="${1 == page.pageable.pageNumber+1} ? 'disabled'">
+											<a class="page-link" href="#"
+											th:href="@{/myPrivate(page=0)}"
+											tabindex="-1" aria-disabled="true">First</a>
+										</li>
+										<li class="page-item"
+											th:classappend="${1 == page.pageable.pageNumber+1} ? 'disabled'">
+											<a class="page-link" href="#"
+											th:href="@{/myPrivate(page=${page.pageable.pageNumber - 1})}"
+											tabindex="-1" aria-disabled="true">Previous</a>
+										</li>
+										<li class="page-item"
+											th:classappend="${i == page.pageable.pageNumber+1} ? 'disabled'"
+											th:each="i : ${#numbers.sequence(startPage, endPage)}">
+											<a class="page-link" href="#" th:text=${i} th:href="@{/myPrivate(page=${i-1})}"></a>
+										</li>
+										<li class="page-item"
+											th:classappend="${page.totalPages == page.pageable.pageNumber + 1} ? 'disabled'">
+											<a class="page-link" href="#"
+											th:href="@{/myPrivate(page=${page.pageable.pageNumber + 1})}">Next</a>
+										</li>
+										<li class="page-item"
+											th:classappend="${page.totalPages == page.pageable.pageNumber + 1} ? 'disabled'">
+											<a class="page-link" href="#"
+											th:href="@{/myPrivate(page=${page.totalPages-1})}">Last</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="mb-0" th:replace="fragments/front/common :: footer">
+    </footer>
+    <div id="back-to-top">
+        <a class="top" href="#top" id="top"> <i class="fa fa-angle-up"></i> </a>
+    </div>
+    <script th:src="@{/library/front/js/infoUpdate.js}"></script>
+    <th:block th:replace="fragments/front/common :: contactBtn"></th:block>
+    <th:block th:replace="fragments/front/script"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+   <head th:replace="fragments/front/common :: head('홈')">
+      
+   </head>
+   <body>
+   	<th:block th:replace="fragments/front/common :: navigation"></th:block>
+      <section id="home" class="iq-main-slider p-0">
+         <div id="home-slider" class="slider m-0 p-0">
+            <div class="slide slick-bg" th:each="topVideos:${topVideos}" th:style="'background-image:url('+${topVideos.image01}+');'">
+               <div class="container-fluid position-relative h-100">
+                  <div class="slider-inner h-100">
+                     <div class="row align-items-center  h-100">
+                        <div class="col-xl-6 col-lg-12 col-md-12">
+                           <a href="javascript:void(0);">
+                              <div class="channel-logo" data-animation-in="fadeInLeft" data-delay-in="0.5">
+                                 <img th:src="@{/library/front/images/logo.png}" class="c-logo" alt="streamit">
+                              </div>
+                           </a>
+                           <h1 class="slider-text big-title title text-uppercase" data-animation-in="fadeInLeft"
+                              data-delay-in="0.6" th:text="${topVideos.name}">영상 제목</h1>
+                           <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
+                              <span class="badge badge-secondary p-2">18+</span>
+                              <span class="ml-3" th:text="${topVideos.hashtag}">영상 해시태그 영역 입니다</span>
+                           </div>
+                           <p data-animation-in="fadeInUp" data-delay-in="1.2" th:text="${topVideos.comment}">영상에 대한 설명 영역 입니다
+                           </p>
+                           <div class="d-flex align-items-center r-mb-23" data-animation-in="fadeInUp" data-delay-in="1.2">
+                              <a href="javascript:void(0)" th:onclick="|buyVideo('${topVideos.id}')|" class="btn btn-hover"><i class="fa fa-play mr-2"
+                                 aria-hidden="true"></i>Play Now</a>
+                              <a class="btn btn-link" ><span th:text="${topVideos.clicks}"></span>회 시청</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44px" height="44px" id="circle"
+               fill="none" stroke="currentColor">
+               <circle r="20" cy="22" cx="22" id="test"></circle>
+            </symbol>
+         </svg>
+      </section>
+
+      <div class="main-content">
+         <section id="iq-favorites">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-12 overflow-hidden">
+                     <div class="iq-main-header d-flex align-items-center justify-content-between">
+                        <h4 class="main-title"><a href="#">최근 시청한 영상</a></h4>                      
+                     </div>
+                     <div class="favorites-contens">
+                        <ul class="favorites-slider list-inline row p-0 mb-0">
+                           <li class="slide-item" th:each="myVideo:${myVideo}" th:if="${myVideo.sign==true}">
+                              <a th:onclick="|buyVideo('${myVideo.video.id}')|">
+                                 <div class="block-images position-relative">
+                                    <div class="img-box">
+                                       <img th:src="${myVideo.video.image02}" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="block-description">
+                                       <h6 th:text="${myVideo.video.name}">영화 제목 영역 입니다</h6>
+                                       <div class="movie-time d-flex align-items-center my-2">
+                                          <div class="badge badge-secondary p-1 mr-2">18+</div>
+                                          <span class="text-white"><span th:text="${myVideo.video.clicks}"></span>회</span>
+                                       </div>
+                                       <div class="hover-buttons" th:onclick="|buyVideo('${myVideo.video.id}')|">
+                                          <span class="btn btn-hover">
+                                          <i class="fa fa-play mr-1" aria-hidden="true"></i>
+                                          	다시보기
+                                          </span>
+                                       </div>
+                                    </div>
+                                    <div class="block-social-info">
+                                       <ul class="list-inline p-0 m-0 music-play-lists">
+                                          <li><span><i class="ri-file-list-2-fill"></i></span></li>
+                                          <li><span><i class="ri-heart-fill"></i></span></li>
+                                          <li><span><i class="ri-play-circle-fill"></i></span></li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section id="iq-upcoming-movie">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-12 overflow-hidden">
+                     <div class="iq-main-header d-flex align-items-center justify-content-between">                        
+                        <h4 class="main-title"><a href="#">Hot 인기 영상</a></h4>
+                     </div>
+                     <div class="upcoming-contens">
+                        <ul class="favorites-slider list-inline row p-0 mb-0">
+                           <li class="slide-item" th:each="videos:${videos}">
+                              <a th:onclick="|buyVideo('${videos.id}')|">
+                                 <div class="block-images position-relative">
+                                    <div class="img-box">
+                                       <img th:src="${videos.image03}" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="block-description">
+                                       <h6 th:text="${videos.name}">영상 제목 영역</h6>
+                                       <div class="movie-time d-flex align-items-center my-2">
+                                          <div class="badge badge-secondary p-1 mr-2">18+</div>
+                                          <span class="text-white"><span th:text="${videos.clicks}"></span>회</span>
+                                       </div>
+                                       <div class="hover-buttons" th:onclick="|buyVideo('${videos.id}')|">
+                                          <span class="btn btn-hover"><i class="fa fa-play mr-1" aria-hidden="true"></i>
+                                          Play Now
+                                          </span>
+                                       </div>
+                                    </div>
+                                    <div class="block-social-info">
+                                       <ul class="list-inline p-0 m-0 music-play-lists">
+                                          <li><span><i class="ri-file-list-2-fill"></i></span></li>
+                                          <li><span><i class="ri-heart-fill"></i></span></li>
+                                          <li><span><i class="ri-play-circle-fill"></i></span></li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section id="iq-suggestede" class="s-margin">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-12 overflow-hidden">
+                     <div class="iq-main-header d-flex align-items-center justify-content-between">                       
+                        <h4 class="main-title"><a href="#">최신 업로드 영상</a></h4>                       
+                     </div>
+                     <div class="suggestede-contens">
+                        <ul class="list-inline favorites-slider row p-0 mb-0">
+                           <li class="slide-item" th:each="recent:${recent}">
+                              <a th:onclick="|buyVideo('${recent.id}')|">
+                                 <div class="block-images position-relative">
+                                    <div class="img-box">
+                                       <img th:src="${recent.image02}" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="block-description">
+                                       <h6 th:text="${recent.name}">영상 제목 영역</h6>
+                                       <div class="movie-time d-flex align-items-center my-2">
+                                          <div class="badge badge-secondary p-1 mr-2">18+</div>
+                                          <span class="text-white"><span th:text="${recent.clicks}"></span>회</span>
+                                       </div>
+                                       <div class="hover-buttons" th:onclick="|buyVideo('${recent.id}')|">
+                                          <span class="btn btn-hover"><i class="fa fa-play mr-1" aria-hidden="true"></i>
+                                          Play Now</span>
+                                       </div>
+                                    </div>
+                                    <div class="block-social-info">
+                                       <ul class="list-inline p-0 m-0 music-play-lists">
+                                          <li><span><i class="ri-file-list-2-fill"></i></span></li>
+                                          <li><span><i class="ri-heart-fill"></i></span></li>
+                                          <li><span><i class="ri-play-circle-fill"></i></span></li>
+                                       </ul>
+                                    </div>
+                                 </div>
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+      <footer class="mb-0" th:replace="fragments/front/common :: footer">
+      
+      </footer>
+      <div id="back-to-top">
+         <a class="top" href="#top" id="top"> <i class="fa fa-angle-up"></i> </a>
+      </div>
+      <th:block th:replace="fragments/front/common :: contactBtn"></th:block>
+      <th:block th:replace="fragments/front/script"></th:block>
+   </body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/front/common :: head('포인트 충전')">
+</head>
+
+<body>
+	<th:block th:replace="fragments/front/common :: navigation"></th:block>
+    <section class="m-profile">
+        <div class="container">
+            <h4 class="main-title mb-4">*** 포인트 충전 - 다양한 혜택을 준비중입니다</h4>
+            <h4 class="main-title mb-4">*** 카드 결제는 찬우박 SHOP을 이용 해 주세요</h4>
+            <a href="http://www.찬우박.com" target="_blank" class="btn btn-hover mt-3" style="margin-bottom:30px;">찬우박's SHOP</a>
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="sign-user_card">
+                        <div class="table-responsive pricing pt-2">
+                            <table id="my-table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center prc-wrap"></th>
+                                        <th class="text-center prc-wrap">
+                                            <div class="prc-box">
+                                                <div class="h3 pt-4 text-white">2,200<small>원 </small></div>
+                                                <span class="type">Basic</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center prc-wrap">
+                                            <div class="prc-box">
+                                                <div class="h3 pt-4 text-white">4,400<small> 원</small></div>
+                                                <span class="type">Standard</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center prc-wrap">
+                                            <div class="prc-box">
+                                                <div class="h3 pt-4 text-white">6,600<small> 원</small></div>
+                                                <span class="type">Platinum</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center prc-wrap">
+                                            <div class="prc-box active">
+                                                <div class="h3 pt-4 text-white">9,900<small> 원</small></div>
+                                                <span class="type">Premium</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th class="text-center" scope="row">영화 감상</th>
+                                        <td class="text-center child-cell"><i class="ri-check-line ri-2x"></i></td>
+                                        <td class="text-center child-cell"><i class="ri-check-line ri-2x"></i>
+                                        </td>
+                                        <td class="text-center child-cell"><i class="ri-check-line ri-2x"></i></td>
+                                        <td class="text-center child-cell active"><i class="ri-check-line ri-2x"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" scope="row">SHOP 쿠폰</th>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i></td>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i>
+                                        </td>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i>
+                                        <td class="text-center child-cell active"><i class="ri-close-line i_close"></i>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" scope="row">보너스 포인트</th>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i></td>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i>
+                                        </td>
+                                        <td class="text-center child-cell"><i class="ri-close-line i_close"></i></td>
+                                        <td class="text-center child-cell active"><i class="ri-close-line i_close"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" th:onclick="orderInsert('2200')" class="btn btn-hover mt-3">Purchase</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" th:onclick="orderInsert('4400')" class="btn btn-hover mt-3">Purchase</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" th:onclick="orderInsert('6600')" class="btn btn-hover mt-3">Purchase</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" th:onclick="orderInsert('9900')" class="btn btn-hover mt-3">Purchase</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	<footer class="mb-0" th:replace="fragments/front/common :: footer">
+    </footer>
+    <div id="back-to-top">
+        <a class="top" href="#top" id="top"> <i class="fa fa-angle-up"></i> </a>
+    </div>
+    <th:block th:replace="fragments/front/script"></th:block>
+</body>
+
+</html>

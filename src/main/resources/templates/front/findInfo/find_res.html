@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>노딱넷 성인인증</title>
+        <script th:inline="javascript">
+        	var findCode = /*[[${FindCode}]]*/ 'default';
+        </script>
+        <script type="text/javascript">
+            window.onload=function(){
+            	
+            	if(findCode=='S'){
+            		self.close();
+                	alert('등록하신 연락처로 아이디가 발송 되었습니다');	
+            	}else if(findCode=='Null'){
+            		self.close();
+            		alert('일치하는 연락처가 없습니다. 카카오톡 문의를 활용 해 주세요');
+            	}
+            	
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

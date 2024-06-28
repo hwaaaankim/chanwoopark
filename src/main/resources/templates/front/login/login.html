@@ -1,0 +1,132 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/front/common :: head('로그인')">
+   
+</head>
+<body>
+<script type="text/javascript">
+    // 인증창 종료 후 인증데이터 리턴 함수
+    function auth_data( frm )
+    {
+        var auth_form     = document.form_auth;
+        var nField        = frm.elements.length;
+        var response_data = "";
+
+        // up_hash 검증 
+        if( frm.up_hash.value != auth_form.veri_up_hash.value )
+        {
+            alert("up_hash 변조 위험있음");
+        }              
+        
+    }
+    // 인증창 호출 함수
+    function auth_type_check()
+    {
+        var auth_form = document.form_auth;
+
+        if( auth_form.ordr_idxx.value == "" )
+        {
+            alert( "요청번호는 필수 입니다." );
+
+            return false;
+        }
+        else
+        {
+            if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) == false ) // 스마트폰이 아닌경우
+            {
+             var return_gubun;
+             var width  = 410;
+             var height = 500;
+
+             var leftpos = screen.width  / 2 - ( width  / 2 );
+             var toppos  = screen.height / 2 - ( height / 2 );
+
+             var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
+             var position = ",left=" + leftpos + ", top="    + toppos;
+             var AUTH_POP = window.open('','auth_popup', winopts + position);
+            }
+            
+            auth_form.target = "auth_popup"; 
+            auth_form.action = "/certification/request";
+            
+            return true;
+        }
+    }
+</script>
+<div id="loading">
+   <div id="loading-center">
+   </div>
+</div>
+
+<section class="sign-in-page">
+   <div class="container">
+      <div class="row justify-content-center align-items-center height-self-center">
+         <div class="col-lg-5 col-md-12 align-self-center">
+            <div class="sign-user_card ">                    
+               <div class="sign-in-page-data">
+                  <div class="sign-in-from w-100 m-auto">
+                     <h3 class="mb-3 text-center">LOGIN</h3>
+                     <form class="mt-4" th:action="@{/member/login}" method="POST">
+                        <div class="form-group">                                 
+                           <input type="text" class="form-control mb-0" id="exampleInputEmail1" placeholder="ID" autocomplete="off" name="username" required>
+                        </div>
+                        <div class="form-group">                                 
+                           <input type="password" class="form-control mb-0" id="exampleInputPassword2" placeholder="Password" name="password" required>
+                        </div>
+                           <div class="sign-info">
+                              <button type="submit" class="btn btn-hover">로그인</button>
+                              <div class="custom-control custom-checkbox d-inline-block">
+                                 <input type="checkbox" class="custom-control-input" id="customCheck" name="remember-me" checked="checked">
+                                 <label class="custom-control-label" for="customCheck">로그인 유지</label>
+                              </div>                                
+                           </div>
+                           <div th:if="${param.error}" class="alert alert-danger" role="alert">
+					    		아이디 혹은 비밀번호 오류 입니다
+					        </div>
+					        <div th:if="${param.logout}" class="alert alert-primary" role="alert">
+								로그아웃 되었습니다
+					        </div>
+					        <div th:if="${msg != null}" class="alert alert-danger" role="alert">
+								성인인증을 완료 한 후에 가능합니다
+					        </div>                                    
+                     </form>
+                  </div>
+               </div>
+               <div class="mt-3">
+	               <form name="form_auth">
+	               		<input type="hidden" name="ordr_idxx" class="frminput" th:value="${ordr_idxx}" size="40" readonly="readonly" maxlength="40" />
+						<input type="hidden" name="req_tx" value="cert" /> 
+						<input type="hidden" name="cert_method" value="01" /> 
+						<input type="hidden" name="web_siteid" th:value="${cf.g_conf_web_siteid}" /> 
+						<input type="hidden" name="site_cd" th:value="${cf.g_conf_site_cd}" /> 
+						<input type="hidden" name="Ret_URL" th:value="${cf.g_conf_Ret_URL}" /> 
+						<input type="hidden" name="cert_otp_use" value="Y" /> 
+						<input type="hidden" name="cert_enc_use_ext" value="Y" /> 
+						<input type="hidden" name="res_cd" value="" /> 
+						<input type="hidden" name="res_msg"	value="" /> 
+						<input type="hidden" name="veri_up_hash" value="" /> 
+						<input type="hidden" name="cert_able_yn" value="Y" /> 
+						<input type="hidden" name="web_siteid_hashYN" value="" /> 
+						<input type="hidden" name="param_opt_1" value="opt1" /> 
+						<input type="hidden" name="param_opt_2" value="opt2" /> 
+						<input type="hidden" name="param_opt_3" value="opt3" />
+	                  <div class="d-flex justify-content-center links">
+	                     	아직 계정이 없으신가요? 
+	                     	<input type="submit" class="loginBtn ml-2" value="회원가입" onclick="return auth_type_check();" alt="인증 요청 버튼">
+	                  </div>
+	                  <div class="d-flex justify-content-center links">
+	                     <a href="javascript:void(0)" th:onclick="findPwF()" class="f-link">비밀번호 찾기</a>
+	                  </div>
+	                  <div class="d-flex justify-content-center links">
+	                     <a href="javascript:void(0)" th:onclick="findIdF()" class="f-link">아이디 찾기</a>
+	                  </div>
+	               </form>  
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<th:block th:replace="fragments/front/script"></th:block>
+</body>
+</html>

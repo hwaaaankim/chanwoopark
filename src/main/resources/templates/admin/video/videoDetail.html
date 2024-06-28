@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="노딱넷 영상등록">
+  <meta name="author" content="노딱넷 영상등록">
+  <meta name="keyword" content="노딱넷 영상등록">
+  <title>노딱넷 영상등록</title>
+  <link href="/library/admin/img/favicon.png" rel="icon">
+  <link href="/library/admin/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link href="/library/admin/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/library/admin/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="/library/admin/lib/bootstrap-fileupload/bootstrap-fileupload.css" />
+  <link href="/library/admin/css/style.css" rel="stylesheet">
+  <link href="/library/admin/css/style-responsive.css" rel="stylesheet">
+  <script src="/library/admin/js/jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body>
+
+	<section id="container">
+		<section id="main-content">
+			<section class="wrapper" style="margin-top:10px;">
+				<h3>
+					<i class="fa fa-angle-right"></i> 영상 상세페이지
+				</h3>
+				<div class="row mt">
+					<div class="col-lg-12">
+						<div class="form-panel">
+							<form th:action="@{/videoUpdate}" class="form-horizontal style-form" enctype="multipart/form-data" method="POST">
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">영상 제목</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="name" th:value="${detail.name}"> 
+										<input type="hidden" class="form-control" name="id" th:value="${detail.id}">
+										<span class="help-block">영상 제목 경고메시지</span>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-md-6 col-lg-6" style="width:50%;">
+										<label class="control-label">인기영상용 이미지</label>
+										<div class="fileupload">
+											<div class="fileupload-new thumbnail" style="width:100%; height: 150px;">
+												<img th:src="${detail.image01}" class="imagef01-select"> 
+											</div>
+											<div>
+												<input type="file" name="imagef01" id="imagef01"/>
+												<input type="hidden" class="default" name="image01" id="image01" th:value="${detail.image01}"/>
+											</div>
+										</div>
+										<script>
+											$("#imagef01").change(
+													function() {
+														if (this.files && this.files[0]) {
+															var reader = new FileReader;
+															reader.onload = function(data) {
+																$(".imagef01-select").attr("src",
+																		data.target.result).width('100%').height(150);
+															} // onload_function
+															reader.readAsDataURL(this.files[0]);
+														} // if
+													}); // change
+										</script>
+										<span class="label label-danger">주의!</span> <span> jpg,
+											png 확장자를 지원합니다</span>
+									</div>
+									<div class="col-md-6 col-lg-6" style="width:50%;">
+										<label class="control-label">최신 영상용 이미지</label>
+										<div class="fileupload fileupload-new">
+											<div class="fileupload-new thumbnail" style="width:100%; height: 150px;">
+												<img th:src="${detail.image02}" class="imagef02-select">
+											</div>
+											<div>
+												<input type="file" class="default" name="imagef02" id="imagef02"/>
+												<input type="hidden" class="default" name="image02" id="image02" th:value="${detail.image02}"/>
+											</div>
+										</div>
+										<script>
+											$("#imagef02").change(
+													function() {
+														if (this.files && this.files[0]) {
+															var reader = new FileReader;
+															reader.onload = function(data) {
+																$(".imagef02-select").attr("src",
+																		data.target.result).width('100%').height(150);
+															} // onload_function
+															reader.readAsDataURL(this.files[0]);
+														} // if
+													}); // change
+										</script>
+										<span class="label label-danger">주의!</span> <span> jpg,
+											png 확장자를 지원합니다</span>
+									</div>
+									<div class="col-md-6 col-lg-6" style="width:50%;">
+										<label class="control-label">HowVideos메뉴용 이미지</label>
+										<div class="fileupload fileupload-new">
+											<div class="fileupload-new thumbnail" style="width:100%; height: 150px;">
+												<img th:src="${detail.image03}" class="imagef03-select">
+											</div>
+											<div>
+												<input type="file" class="default" name="imagef03" id="imagef03"/>
+												<input type="hidden" class="default" name="image03" id="image03" th:value="${detail.image03}"/>
+											</div>
+										</div>
+										<script>
+											$("#imagef03").change(
+													function() {
+														if (this.files && this.files[0]) {
+															var reader = new FileReader;
+															reader.onload = function(data) {
+																$(".imagef03-select").attr("src",
+																		data.target.result).width('100%').height(150);
+															} // onload_function
+															reader.readAsDataURL(this.files[0]);
+														} // if
+													}); // change
+										</script>
+										<span class="label label-danger">주의!</span> <span> jpg,
+											png 확장자를 지원합니다</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">영상 코드</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="videocode" th:value="${detail.videocode}"> 
+										<span class="help-block">영상 코드 경고메시지</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">영상 가격</label>
+									<div class="col-sm-10">
+										<input type="number" class="form-control" name="price" th:value="${detail.price}"> 
+										<span class="help-block">영상 가격 경고메시지</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">영상 해시태그</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="hashtag" th:value="${detail.hashtag}"> 
+										<span class="help-block">영상 해시태그 경고메시지</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">영상 설명</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" name="comment" th:text="${detail.comment}"></textarea> 
+										<span class="help-block">영상 설명 경고메시지</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-10">
+										<input type="submit" class="btn btn-theme" value="수정">
+										<input type="button" class="btn btn-theme" value="삭제">
+										<input type="button" class="btn btn-theme" value="닫기">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+	</section>
+	<script src="/library/admin/lib/jquery/jquery.min.js"></script>
+	<script src="/library/admin/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script class="include" type="text/javascript" src="/library/admin/lib/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="/library/admin/lib/jquery.scrollTo.min.js"></script>
+	<script src="/library/admin/lib/jquery.nicescroll.js" type="text/javascript"></script>
+	<script src="/library/admin/lib/common-scripts.js"></script>
+	<script src="/library/admin/lib/jquery-ui-1.9.2.custom.min.js"></script>
+	<th:block th:if="${UpCode == 'S'}">
+		<script>
+			alert('영상 정보가 수정 되었습니다')
+			self.close();
+			opener.location.reload();
+		</script>
+	</th:block>
+</body>
+
+</html>

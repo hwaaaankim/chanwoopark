@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/admin/common :: head('노딱넷 회원관리')">
+
+</head>
+
+<body>
+	<section id="container">
+		<header class="header black-bg" th:replace="fragments/admin/common :: header">
+			
+		</header>
+		
+		<aside th:replace="fragments/admin/common :: sidebar">
+			
+		</aside>
+		
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="row mt">
+					<div class="col-md-12">
+						<div class="content-panel">
+							<button class="video-registerBtn" th:onclick="videoRegisterF()">회원 등록</button>
+                			<hr>
+                			<form class="form-inline" th:action="@{/memberManager}">
+                				<select class="form-control" id="contentCount" th:name="size">
+                					<option value="default">-- 게시물 수 --</option>
+                					<option th:value="10" th:selected="${members.pageable.pageSize}=='10'">-- 10개씩 보기 --</option>
+									<option th:value="30" th:selected="${members.pageable.pageSize}=='30'">-- 30개씩 보기 --</option>
+									<option th:value="50" th:selected="${members.pageable.pageSize}=='50'">-- 50개씩 보기 --</option>
+                				</select>
+								<select class="form-control" id="searchCondition" th:name="searchCondition">
+									<option th:value="none" value="default">-- 검색 조건 설정 --</option>
+									<option th:value="name" th:selected="${searchCondition} == 'name'">-- 이름으로 검색 --</option>
+									<option th:value="username" th:selected="${searchCondition} == 'username'">-- 아이디로 검색 --</option>
+									<option th:value="nickname" th:selected="${searchCondition} == 'nickname'">-- 닉네임으로 검색 --</option>
+									<option th:value="phone" th:selected="${searchCondition} == 'phone'">-- 휴대폰 번호로 검색 --</option>
+								</select>
+								<input type="text" class="form-control" id="contentSearch" th:name="contentSearch" 
+								placeholder="검색어 입력" th:value="${param.contentSearch}">
+								<input type="submit" value="검색" class="btn btn-theme">
+								<input type="button" class="btn btn-theme" value="리셋" th:onclick="searchReset()">
+							</form>
+							<table class="table table-striped table-advance table-hover">
+								<thead>
+									<tr>
+										<th class="hidden-phone"><i class="fa fa-bullhorn"></i> 번호</th>
+										<th class="hidden-phone"><i class="fa fa-bookmark"></i> 가입일</th>
+										<th><i class="fa fa-question-circle"></i>이름</th>
+										<th><i class="fas fa-dollar-sign"></i>아이디</th>
+										<th><i class="fa fa-user"></i> 포인트</th>
+										<th><i class="fas fa-cogs"></i> 비고</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="members : ${members}">
+										<td class="hidden-phone" th:text=${members.id}>번호</td>
+										<td class="hidden-phone" th:text="${members.joindate}">날짜</td>
+										<td><a href="javascript:void(0)" th:onclick="|memberDetail('${members.id}')|" th:text="${members.name}">영상 제목</a></td>
+										<td th:text="${members.username}">가격</td>
+										<td th:text="${members.point}">조회수</td>
+										<td>
+											<button class="btn btn-primary btn-xs" th:onclick="|memberDetail('${members.id}')|">
+												<i class="fa fa-pencil"></i>
+											</button>
+											<button class="btn btn-danger btn-xs" th:onclick="|memberDelete('${members.id}')|">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+							<nav aria-label="navigation" style="text-align: center;">
+								<ul class="pagination justify-content-center">
+									<li class="page-item"
+										th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/memberManager(page=0)}"
+										tabindex="-1" aria-disabled="true">First</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${1 == members.pageable.pageNumber+1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/memberManager(page=${members.pageable.pageNumber - 1})}"
+										tabindex="-1" aria-disabled="true">Previous</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${i == members.pageable.pageNumber+1} ? 'disabled'"
+										th:each="i : ${#numbers.sequence(startPage, endPage)}">
+										<a	class="page-link" href="#" th:text=${i}
+										th:href="@{/memberManager(page=${i-1})}">1</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/memberManager(page=${members.pageable.pageNumber + 1})}">Next</a>
+									</li>
+									<li class="page-item"
+										th:classappend="${members.totalPages == members.pageable.pageNumber + 1} ? 'disabled'">
+										<a class="page-link" href="#"
+										th:href="@{/memberManager(page=${members.totalPages-1})}">Last</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		
+		<footer th:replace="fragments/admin/common :: footer">
+		</footer>
+	</section>
+	<th:block th:replace="fragments/admin/script"></th:block>
+</body>
+</html>

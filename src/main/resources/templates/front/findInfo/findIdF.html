@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/front/common :: head('노딱넷 아이디찾기')">
+
+</head>
+
+<body oncontextmenu="return false;" ondragstart="return false;"	onselectstart="return false;">
+<script type="text/javascript">
+    // 인증창 종료 후 인증데이터 리턴 함수
+    function auth_data( frm )
+    {
+        var auth_form     = document.form_auth;
+        var nField        = frm.elements.length;
+        var response_data = "";
+
+        // up_hash 검증 
+        if( frm.up_hash.value != auth_form.veri_up_hash.value )
+        {
+            alert("up_hash 변조 위험있음");
+            
+        }              
+    }
+    
+    // 인증창 호출 함수
+    function auth_type_check()
+    {
+        var auth_form = document.form_auth;
+
+        if( auth_form.ordr_idxx.value == "" )
+        {
+            alert( "요청번호는 필수 입니다." );
+
+            return false;
+        }
+        else
+        {
+            if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) == false ) // 스마트폰이 아닌경우
+            {
+             var return_gubun;
+             var width  = 410;
+             var height = 500;
+
+             var leftpos = screen.width  / 2 - ( width  / 2 );
+             var toppos  = screen.height / 2 - ( height / 2 );
+
+             var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
+             var position = ",left=" + leftpos + ", top="    + toppos;
+             var AUTH_POP = window.open('','auth_popup', winopts + position);
+            }
+            
+            auth_form.target = "auth_popup"; 
+            auth_form.action = "/certification/findInfoReq";
+            
+            return true;
+        }
+    }
+
+</script>
+	<div class="container findIdWrap">
+		<div class="findIdInner">
+			<p>찬우박 노딱넷 아이디 찾기</p>
+			<p>휴대폰 인증을 진행 해 주세요</p>
+			<form name="form_auth">
+				<input type="submit" id="certificationBtn" class="btn btn-danger" value="휴대폰인증" onclick="return auth_type_check();" alt="인증 요청 버튼">
+				<input type="hidden" name="ordr_idxx" class="frminput" th:value="${ordr_idxx}" size="40" readonly="readonly" maxlength="40" />
+				<input type="hidden" name="req_tx" value="cert" /> 
+				<input type="hidden" name="cert_method" value="01" /> 
+				<input type="hidden" name="web_siteid" th:value="${cf.g_conf_web_siteid}" /> 
+				<input type="hidden" name="site_cd" th:value="${cf.g_conf_site_cd}" /> 
+				<input type="hidden" name="Ret_URL" th:value="${cf.g_conf_Ret_URL}" /> 
+				<input type="hidden" name="cert_otp_use" value="Y" /> 
+				<input type="hidden" name="cert_enc_use_ext" value="Y" /> 
+				<input type="hidden" name="res_cd" value="" /> 
+				<input type="hidden" name="res_msg"	value="" /> 
+				<input type="hidden" name="veri_up_hash" value="" /> 
+				<input type="hidden" name="cert_able_yn" value="Y" /> 
+				<input type="hidden" name="web_siteid_hashYN" value="" /> 
+				<input type="hidden" name="param_opt_1" value="opt1" /> 
+				<input type="hidden" name="param_opt_2" value="opt2" /> 
+				<input type="hidden" name="param_opt_3" value="opt3" />
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
